@@ -1,0 +1,18 @@
+FROM heroku/miniconda
+
+# Install dependencies
+ADD environment.yml /tmp/environment.yml
+RUN conda env update -f /tmp/environment.yml
+RUN echo "source activate smilesbot" > ~/.bashrc
+ENV PATH /opt/conda/envs/smilesbot/bin:$PATH
+
+# Add our code
+ADD . / /opt/webapp/
+WORKDIR /opt/webapp
+
+# Run the image as a non-root user
+RUN adduser --disabled-password myuser
+USER myuser
+
+CMD gunicorn --bind 0.0.0.0:$PORT wsgi 
+

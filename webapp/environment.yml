@@ -1,0 +1,10 @@
+name: smilesbot
+channels:
+  - rdkit
+dependencies:
+  - python=3
+  - rdkit
+  - flask
+  - pip:
+    - slackclient
+    - gunicorn
